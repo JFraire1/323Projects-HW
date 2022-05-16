@@ -1,0 +1,55 @@
+--1
+SELECT recommendedby, COUNT(*)
+FROM members
+WHERE recommendedby is not null
+GROUP BY recommendedby
+ORDER BY recommendedby;
+
+--2
+SELECT facid, SUM(slots) AS "Total Slots"
+FROM bookings
+GROUP BY bookings.facid
+HAVING SUM(slots) > 1000
+ORDER BY facid;
+
+--3
+SELECT facid, SUM(slots)
+FROM bookings
+GROUP BY facid
+HAVING SUM(slots) = (
+        SELECT MAX(sum)
+        FROM (
+            SELECT SUM(slots) as sum
+            FROM bookings
+            GROUP BY bookings.facid
+            ) as sums
+    );
+
+--4
+SELECT DISTINCT firstname, surname, members.memid, MIN(starttime)
+FROM members
+INNER JOIN bookings b on members.memid = b.memid
+WHERE date(starttime) >= '2012-09-01'
+GROUP BY surname, firstname, members.memid
+ORDER BY members.memid;
+
+--5
+SELECT EXTRACT(MONTH FROM starttime) as month, EXTRACT(YEAR FROM starttime) as year, COUNT(*)
+FROM bookings
+GROUP BY month, year
+ORDER BY year, month;
+
+--6
+SELECT name
+FROM facilities
+EXCEPT
+    SELECT DISTINCT name
+    FROM facilities
+             INNER JOIN bookings b on facilities.facid = b.facid
+             INNER JOIN members m on b.memid = m.memid
+    WHERE firstname = 'John' and surname = 'Hunt'
+
+
+
+
+

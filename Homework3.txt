@@ -1,0 +1,44 @@
+SELECT *
+FROM orders
+    INNER JOIN orderdetails USING (ordernumber)
+WHERE ordernumber in (10270, 10272, 10279);
+
+----------------------------------------------------------------------------------------
+
+SELECT DISTINCT pl.productline, pl.textdescription, pr.productvendor
+FROM productlines AS pl
+INNER JOIN products AS pr USING (productline)
+ORDER BY pl.productline, pr.productvendor;
+
+----------------------------------------------------------------------------------------
+
+SELECT *
+FROM customers
+INNER JOIN offices USING (state)
+ORDER BY customername;
+
+----------------------------------------------------------------------------------------
+
+SELECT customername, orderdate, quantityordered, productline, productname
+FROM customers
+INNER JOIN orders using (customernumber)
+INNER JOIN orderdetails using (ordernumber)
+INNER JOIN products using (productcode)
+WHERE customername like '%Decorations%'
+  AND EXTRACT(YEAR FROM orderdate) = 2015
+  AND MOD(EXTRACT(MONTH FROM orderdate), 2) = 1
+ORDER BY customername, orderdate;
+
+----------------------------------------------------------------------------------------
+
+SELECT *
+FROM products
+LEFT OUTER JOIN orderdetails USING (productcode)
+WHERE ordernumber is NULL;
+
+----------------------------------------------------------------------------------------
+
+SELECT *
+FROM customers AS c
+LEFT OUTER JOIN employees AS e on c.salesrepemployeenumber = e.employeenumber
+ORDER BY customername;

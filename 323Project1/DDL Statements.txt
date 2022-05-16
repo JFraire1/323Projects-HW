@@ -1,0 +1,121 @@
+create table "Project1".manufacturers
+(
+    name              varchar(50) not null
+        constraint manufacturers_uk_1
+            unique,
+    phone_num         varchar(15) not null
+        constraint manufacturers_uk_2
+            unique,
+    "manufacturer_ID" serial
+        constraint manufacturers_pk
+            primary key
+);
+
+alter table "Project1".manufacturers
+    owner to postgres;
+
+create table "Project1".customers
+(
+    "firstName"   varchar(15) not null,
+    phone_num     varchar(15) not null,
+    "customer_ID" serial
+        constraint customers_pk
+            primary key,
+    "lastName"    varchar(15) not null,
+    constraint customers_uk_1
+        unique (phone_num, "lastName", "firstName")
+);
+
+alter table "Project1".customers
+    owner to postgres;
+
+create table "Project1".purchase_orders
+(
+    price               double precision not null,
+    order_time          timestamp        not null,
+    "purchase_order_ID" serial
+        constraint purchase_orders_pk
+            primary key,
+    "manufacturer_ID"   integer
+        constraint purchase_orders_manufacturers_manufacturer_id_fk
+            references "Project1".manufacturers
+            on update cascade on delete set null
+);
+
+alter table "Project1".purchase_orders
+    owner to postgres;
+
+create table "Project1".models
+(
+    name              varchar(50)                                                           not null,
+    year              integer                                                               not null,
+    body_type         varchar(50)                                                           not null,
+    "model_ID"        integer default nextval('"Project1"."Models_model_ID_seq"'::regclass) not null
+        constraint models_pk
+            primary key,
+    "manufacturer_ID" integer
+        constraint models_manufacturers_manufacturer_id_fk
+            references "Project1".manufacturers
+            on update restrict,
+    constraint models_uk_1
+        unique (name, year, body_type)
+);
+
+alter table "Project1".models
+    owner to postgres;
+
+create table "Project1".automobiles
+(
+    sticker_price       numeric(10, 2) not null,
+    color               varchar(15)    not null,
+    "purchase_order_ID" integer
+        constraint automobiles_purchase_orders_purchase_order_id_fk
+            references "Project1".purchase_orders
+            on update restrict on delete set null,
+    "model_ID"          integer
+        constraint automobiles_models_model_id_fk
+            references "Project1".models
+            on update restrict on delete set null,
+    vin                 varchar(17)    not null
+        constraint automobiles_pk
+            primary key
+);
+
+alter table "Project1".automobiles
+    owner to postgres;
+
+create table "Project1".sales_contracts
+(
+    signing_date  date           not null,
+    sales_price   numeric(10, 2) not null,
+    delivery_date date,
+    "customer_ID" integer
+        constraint sales_contracts_customers_customer_id_fk
+            references "Project1".customers
+            on update restrict on delete set null,
+    vin           varchar(17)    not null
+        constraint sales_contracts_pk
+            primary key
+        constraint sales_contracts_automobiles_vin_fk
+            references "Project1".automobiles
+            on update restrict
+);
+
+alter table "Project1".sales_contracts
+    owner to postgres;
+
+create table "Project1".production_logs
+(
+    status varchar(25) not null,
+    time   timestamp   not null,
+    vin    varchar(17) not null
+        constraint production_logs_automobiles_vin_fk
+            references "Project1".automobiles
+            on update restrict,
+    constraint production_logs_pk
+        primary key (vin, status)
+);
+
+alter table "Project1".production_logs
+    owner to postgres;
+

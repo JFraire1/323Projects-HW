@@ -1,0 +1,69 @@
+INSERT INTO manufacturers (name, phone_num)
+VALUES ('Toyota', '4445556666');
+
+INSERT INTO models (name, year, body_type, "manufacturer_ID")
+VALUES('Prius', 2022, 'Sedan', 1);
+
+INSERT INTO models (name, year, body_type, "manufacturer_ID")
+VALUES('Sienna', 2022, 'Minivan', 1);
+
+INSERT INTO purchase_orders (price, order_time, "manufacturer_ID")
+VALUES (60000.00, '2022-01-10 07:34:22', 1);
+
+INSERT INTO automobiles (sticker_price, color, "purchase_order_ID", "model_ID", vin)
+VALUES (32000.00, 'Red', 1, 1, '00000000000000001');
+
+INSERT INTO automobiles (sticker_price, color, "purchase_order_ID", "model_ID", vin)
+VALUES (40000.00, 'Blue', 1, 2, '00000000000000002');
+
+INSERT INTO automobiles (sticker_price, color, "purchase_order_ID", "model_ID", vin)
+VALUES (44000.00, 'Black', 1, 2, '00000000000000003');
+
+INSERT INTO production_logs (status, time, vin)
+VALUES ('Vehicle Order Received', '2022-01-01 07:44:54', '00000000000000001');
+
+INSERT INTO production_logs (status, time, vin)
+VALUES ('Vehicle Order Received', '2022-01-10 07:44:58', '00000000000000002');
+
+INSERT INTO production_logs (status, time, vin)
+VALUES ('Vehicle Order Received', '2022-01-10 07:45:04', '00000000000000003');
+
+INSERT INTO production_logs (status, time, vin)
+VALUES ('Began Manufacturing', '2022-01-13 09:03:54', '00000000000000003');
+
+INSERT INTO production_logs (status, time, vin)
+VALUES ('Finished Manufacturing', '2022-01-16 11:43:22', '00000000000000003');
+
+INSERT INTO production_logs (status, time, vin)
+VALUES ('Began En Route', '2022-01-17 14:03:54', '00000000000000003');
+
+INSERT INTO production_logs (status, time, vin)
+VALUES ('Delivered', '2022-01-26 17:20:06', '00000000000000003');
+
+INSERT INTO customers ("firstName", "lastName", phone_num)
+VALUES ('Jose', 'Fraire', '1112223333');
+
+INSERT INTO sales_contracts (signing_date, sales_price, delivery_date, "customer_ID", vin)
+VALUES ('2022-01-17', 44000.00, '2022-01-27', 1, '00000000000000003');
+
+INSERT INTO sales_contracts (signing_date, sales_price,"customer_ID", vin)
+VALUES ('2022-02-01', 28800, 1, '00000000000000001');
+
+SELECT *
+FROM models
+WHERE name = 'Prius';
+
+SELECT *
+FROM sales_contracts
+WHERE signing_date = '2022-02-01';
+
+SELECT *
+FROM production_logs
+WHERE vin = '00000000000000003'
+  AND status = 'Delivered';
+
+SELECT *
+FROM automobiles
+WHERE sticker_price < 40000.00;
+
+

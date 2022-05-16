@@ -1,0 +1,62 @@
+SELECT contactlastname, contactfirstname, creditlimit
+FROM customers
+WHERE creditlimit > 50000
+ORDER BY contactlastname, contactfirstname;
+
+--------------------------------------------------------------------------------
+
+SELECT *
+FROM customers
+WHERE creditlimit = 0.00
+ORDER BY customername;
+
+--------------------------------------------------------------------------------
+
+SELECT *
+FROM offices
+WHERE country != 'USA';
+
+--------------------------------------------------------------------------------
+
+SELECT *
+FROM orders
+WHERE EXTRACT(YEAR FROM orderdate) = 2014
+    AND (EXTRACT(MONTH FROM orderdate) = 6 AND EXTRACT(DAY FROM orderdate) >= 16
+    OR EXTRACT(MONTH FROM orderdate) = 7 AND EXTRACT(DAY FROM orderdate) <= 7);
+
+--------------------------------------------------------------------------------
+
+SELECT *
+FROM products
+WHERE quantityinstock < 1000;
+
+--------------------------------------------------------------------------------
+
+SELECT *
+FROM orders
+WHERE requireddate < shippeddate;
+
+--------------------------------------------------------------------------------
+
+SELECT *
+FROM customers
+WHERE customername like '%Mini%';
+
+--------------------------------------------------------------------------------
+
+SELECT *
+FROM products
+WHERE productvendor = 'Highway 66 Mini Classics';
+
+--------------------------------------------------------------------------------
+
+SELECT *
+FROM products
+WHERE productvendor != 'Highway 66 Mini Classics'
+ORDER BY productname;
+
+--------------------------------------------------------------------------------
+
+SELECT *
+FROM employees
+WHERE reportsto is NULL;
