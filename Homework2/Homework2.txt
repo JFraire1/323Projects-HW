@@ -1,9 +1,14 @@
+8. select contact firstname, contact lastname and credit limit for all customers where credit
+limit > 50000 ordered by the last name, then the first name. (85)
+
 SELECT contactlastname, contactfirstname, creditlimit
 FROM customers
 WHERE creditlimit > 50000
 ORDER BY contactlastname, contactfirstname;
 
 --------------------------------------------------------------------------------
+
+9. select customers who do not have a credit limit (0.00) order by customerName (24)
 
 SELECT *
 FROM customers
@@ -12,11 +17,15 @@ ORDER BY customername;
 
 --------------------------------------------------------------------------------
 
+10. List all offices not in the USA (4)
+
 SELECT *
 FROM offices
 WHERE country != 'USA';
 
 --------------------------------------------------------------------------------
+
+11. List orders made between June 16, 2014 and July 7, 2014 (8)
 
 SELECT *
 FROM orders
@@ -26,11 +35,15 @@ WHERE EXTRACT(YEAR FROM orderdate) = 2014
 
 --------------------------------------------------------------------------------
 
+12. List products that we need to reorder (quantityinstock < 1000) (12)
+
 SELECT *
 FROM products
 WHERE quantityinstock < 1000;
 
 --------------------------------------------------------------------------------
+
+13. List all orders that shipped after the required date (1)
 
 SELECT *
 FROM orders
@@ -38,11 +51,15 @@ WHERE requireddate < shippeddate;
 
 --------------------------------------------------------------------------------
 
+14. List all customers who have the word ‘Mini’ in their name (10)
+
 SELECT *
 FROM customers
 WHERE customername like '%Mini%';
 
 --------------------------------------------------------------------------------
+
+15. List all products supplied by ‘Highway 66 Mini Classics’ (9)
 
 SELECT *
 FROM products
@@ -50,12 +67,16 @@ WHERE productvendor = 'Highway 66 Mini Classics';
 
 --------------------------------------------------------------------------------
 
+16. List all products not supplied by ‘Highway 66 Mini Classics’ order by productName (101)
+
 SELECT *
 FROM products
 WHERE productvendor != 'Highway 66 Mini Classics'
 ORDER BY productname;
 
 --------------------------------------------------------------------------------
+
+17. List all employees that don't have a manager (1)
 
 SELECT *
 FROM employees
