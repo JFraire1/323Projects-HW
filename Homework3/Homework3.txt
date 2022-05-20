@@ -1,9 +1,15 @@
+18. Display every order along with the details of that order for order numbers 10270, 10272,
+10279 (23)
+
 SELECT *
 FROM orders
     INNER JOIN orderdetails USING (ordernumber)
 WHERE ordernumber in (10270, 10272, 10279);
 
 ----------------------------------------------------------------------------------------
+
+19. List of productlines, the productline’s text description and vendors that supply the products
+in that productline ordered by productLine and productVendor. (65)
 
 SELECT DISTINCT pl.productline, pl.textdescription, pr.productvendor
 FROM productlines AS pl
@@ -12,12 +18,21 @@ ORDER BY pl.productline, pr.productvendor;
 
 ----------------------------------------------------------------------------------------
 
+20. select customers that live in the same state as one of our offices ordered by
+customerName (26)
+
 SELECT *
 FROM customers
 INNER JOIN offices USING (state)
 ORDER BY customername;
 
 ----------------------------------------------------------------------------------------
+
+22. Select customerName, orderDate, quantityOrdered, productLine, productName for all
+orders by a customer with the string ‘Decorations’ in their name, made and shipped during
+odd-numbered months in 2015 ordered by customerName and orderDate. SQL has a
+mod function that takes two arguments: the number that you want to perform modular
+division on, and the divisor. For instance mod (8, 3) will return 2. (28)
 
 SELECT customername, orderdate, quantityordered, productline, productname
 FROM customers
@@ -31,12 +46,17 @@ ORDER BY customername, orderdate;
 
 ----------------------------------------------------------------------------------------
 
+23. List products that didn't sell (1)
+
 SELECT *
 FROM products
 LEFT OUTER JOIN orderdetails USING (productcode)
 WHERE ordernumber is NULL;
 
 ----------------------------------------------------------------------------------------
+
+24. List all customers and their sales rep even if they don’t have a sales rep order by
+customerName (122)
 
 SELECT *
 FROM customers AS c

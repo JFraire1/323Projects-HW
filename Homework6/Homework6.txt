@@ -1,18 +1,25 @@
---1
+--1 Select each member ID and the number of other members they have recommended, 
+ordered by member ID. Do not include members who were not recommended by anyone.
+
 SELECT recommendedby, COUNT(*)
 FROM members
 WHERE recommendedby is not null
 GROUP BY recommendedby
 ORDER BY recommendedby;
 
---2
+--2 Select all facilities with more than 1000 slots booked. Your output should 
+consist of facility id and slots, sorted by facility id.
+
 SELECT facid, SUM(slots) AS "Total Slots"
 FROM bookings
 GROUP BY bookings.facid
 HAVING SUM(slots) > 1000
 ORDER BY facid;
 
---3
+--3 Select the facilities with the largest total number of booked slots. 
+Make sure to select ALL facilities with this total, in case there is a tie. 
+(There is not in this database, but pretend there could be.) 
+
 SELECT facid, SUM(slots)
 FROM bookings
 GROUP BY facid
@@ -25,7 +32,9 @@ HAVING SUM(slots) = (
             ) as sums
     );
 
---4
+--4 Select each member's surname, firstname, memid, and the starttime of 
+their first (hint: smallest) booking on or after September 1, 2012, ordered by memid.
+
 SELECT DISTINCT firstname, surname, members.memid, MIN(starttime)
 FROM members
 INNER JOIN bookings b on members.memid = b.memid
@@ -33,13 +42,16 @@ WHERE date(starttime) >= '2012-09-01'
 GROUP BY surname, firstname, members.memid
 ORDER BY members.memid;
 
---5
+--5 Select the counts of how many bookings were made for each year and month, 
+sorted by the year and month.
+
 SELECT EXTRACT(MONTH FROM starttime) as month, EXTRACT(YEAR FROM starttime) as year, COUNT(*)
 FROM bookings
 GROUP BY month, year
 ORDER BY year, month;
 
---6
+--6 Select the names of all facilities that have never been booked by the member named John Hunt
+
 SELECT name
 FROM facilities
 EXCEPT
